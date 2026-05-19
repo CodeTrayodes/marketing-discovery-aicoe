@@ -792,13 +792,15 @@ nav a.vision-link.active .nav-dot {
 #discuss.drawer-open {
   position: fixed;
   bottom: 0; left: 0; right: 0;
+  width: auto;          /* override mobile media-query width:0 */
   max-height: 72vh;
   border-radius: 14px 14px 0 0;
   border-left: none;
   border-top: 1px solid var(--border);
+  background: var(--bg-warm);
   z-index: 301;
   overflow-y: auto;
-  padding-top: 0;
+  padding: 0 18px 20px; /* restore horizontal padding; top is 0, handle provides spacing */
 }
 .drawer-handle {
   display: none;
@@ -1525,6 +1527,12 @@ nav a.vision-link.active .nav-dot {
     document.getElementById('pane-model').textContent = model;
     document.getElementById('agent-detail').style.display = 'block';
     document.getElementById('pane-hint').style.display    = 'none';
+    // Mobile: pipeline stacks above the detail col — scroll it into view
+    if (window.innerWidth <= 768) {
+      setTimeout(() => {
+        document.getElementById('agent-detail').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+    }
   }
 
   function closeAgentDetail() {
