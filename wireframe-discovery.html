@@ -1,0 +1,1559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Marketing Studio — Discovery Wireframe</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #1a1a1a;
+  --ink-muted: #666;
+  --ink-faint: #999;
+  --border: #d8d8d8;
+  --border-light: #ebebeb;
+  --surface: #ffffff;
+  --bg: #f4f4f2;
+  --bg-warm: #faf9f7;
+  --question: #2A52BE;
+  --question-bg: #eef1fb;
+  --vision-accent: #111;
+  --sidebar: 224px;
+  --topbar: 56px;
+}
+
+body {
+  font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--ink);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── NAV RAIL ── */
+#rail {
+  width: var(--sidebar);
+  min-width: var(--sidebar);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  left: 0; top: 0;
+  z-index: 100;
+}
+
+.rail-brand {
+  padding: 18px 20px 16px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.brand-mark {
+  width: 30px; height: 30px;
+  background: var(--ink);
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}
+.brand-mark span {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+.brand-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: -.2px;
+  line-height: 1.2;
+}
+.brand-name small {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  letter-spacing: .3px;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+
+.rail-section {
+  padding: 10px 12px 4px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+nav { flex: 1; padding: 6px 0; }
+nav a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  color: var(--ink-muted);
+  text-decoration: none;
+  font-size: 13px;
+  cursor: pointer;
+  border-radius: 0;
+  transition: all .12s;
+  position: relative;
+}
+nav a .nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+  transition: background .12s;
+}
+nav a:hover { color: var(--ink); background: var(--bg); }
+nav a:hover .nav-dot { background: var(--ink-muted); }
+nav a.active {
+  color: var(--ink);
+  font-weight: 600;
+  background: var(--bg);
+}
+nav a.active .nav-dot { background: var(--ink); }
+nav a.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--ink);
+  border-radius: 0 2px 2px 0;
+}
+
+.rail-divider { border: none; border-top: 1px solid var(--border-light); margin: 8px 0; }
+
+nav a.vision-link {
+  color: var(--ink-faint);
+  font-style: italic;
+  font-size: 12px;
+}
+nav a.vision-link .nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--border);
+}
+nav a.vision-link.active {
+  color: var(--ink);
+  font-style: italic;
+  background: #f0f0ff;
+}
+nav a.vision-link.active .nav-dot {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.screen-counter {
+  padding: 10px 20px 14px;
+  border-top: 1px solid var(--border-light);
+}
+.counter-label {
+  font-size: 10px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  margin-bottom: 8px;
+}
+.counter-pips {
+  display: flex;
+  gap: 5px;
+}
+.pip {
+  height: 3px;
+  flex: 1;
+  background: var(--border);
+  border-radius: 2px;
+  transition: background .2s;
+}
+.pip.active { background: var(--ink); }
+
+/* ── SHELL ── */
+#shell {
+  margin-left: var(--sidebar);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── TOPBAR ── */
+#topbar {
+  height: var(--topbar);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 24px;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.topbar-left { display: flex; align-items: center; gap: 12px; }
+.page-title { font-size: 15px; font-weight: 700; letter-spacing: -.3px; }
+.page-subtitle { font-size: 12px; color: var(--ink-faint); }
+.topbar-right { display: flex; align-items: center; gap: 10px; }
+.chip {
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 12px;
+  color: var(--ink-muted);
+  cursor: pointer;
+  background: var(--bg-warm);
+}
+.icon-btn {
+  width: 32px; height: 32px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-warm);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+
+/* ── VIEWPORT ── */
+#viewport {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  gap: 0;
+}
+
+/* ── MAIN CONTENT ── */
+#main-content {
+  flex: 1;
+  padding: 28px;
+  overflow-y: auto;
+}
+
+/* ── DISCUSSION PANEL ── */
+#discuss {
+  width: 260px;
+  min-width: 260px;
+  background: var(--bg-warm);
+  border-left: 1px solid var(--border-light);
+  padding: 20px 18px;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+.discuss-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--ink-faint);
+  margin-bottom: 14px;
+}
+.q-card {
+  background: var(--question-bg);
+  border: 1px solid #c8d3f5;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+.q-card .q-num {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--question);
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  margin-bottom: 5px;
+}
+.q-card .q-text {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink);
+}
+.q-note {
+  font-size: 11px;
+  color: var(--ink-faint);
+  line-height: 1.5;
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid #dde3f8;
+}
+.divider-discuss {
+  border: none;
+  border-top: 1px solid var(--border-light);
+  margin: 14px 0;
+}
+.tbd-block {
+  background: var(--surface);
+  border: 1.5px dashed var(--border);
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 11px;
+  color: var(--ink-faint);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* ── SCREENS ── */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* ── REUSABLE PRIMITIVES ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 18px;
+}
+.card + .card { margin-top: 0; }
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 12px;
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+.row { display: flex; gap: 14px; }
+.col { flex: 1; }
+.spacer { height: 14px; }
+.placeholder {
+  background: var(--bg);
+  border: 1.5px dashed var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-faint);
+  font-size: 11px;
+  letter-spacing: .3px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  background: #ebebeb;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
+.badge-dark { background: var(--ink); color: #fff; }
+.badge-outline { background: transparent; border: 1px solid var(--border); }
+.btn {
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--surface);
+  color: var(--ink);
+  letter-spacing: -.1px;
+}
+.btn-filled { background: var(--ink); color: #fff; }
+.btn-sm { padding: 4px 10px; font-size: 11px; }
+
+/* ── SCREEN 1: COCKPIT ── */
+.hero-stat {
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: -2px;
+  line-height: 1;
+  color: var(--ink);
+}
+.hero-label {
+  font-size: 13px;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+.stat-row {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--surface);
+}
+.stat-cell {
+  flex: 1;
+  padding: 16px 18px;
+  border-right: 1px solid var(--border-light);
+}
+.stat-cell:last-child { border-right: none; }
+.stat-val { font-size: 22px; font-weight: 700; letter-spacing: -.5px; }
+.stat-lbl { font-size: 11px; color: var(--ink-faint); margin-top: 2px; }
+.stat-delta { font-size: 11px; color: var(--ink-muted); margin-top: 4px; }
+
+.bu-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.bu-row:last-child { border-bottom: none; }
+.bu-name { font-size: 12px; width: 180px; flex-shrink: 0; color: var(--ink); }
+.track { flex: 1; height: 6px; background: #e8e8e8; border-radius: 3px; }
+.fill { height: 100%; background: var(--ink); border-radius: 3px; transition: width .4s; }
+.bu-count { font-size: 11px; color: var(--ink-faint); width: 50px; text-align: right; flex-shrink: 0; }
+
+.feed-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.feed-item:last-child { border-bottom: none; }
+.feed-pip {
+  width: 6px; height: 6px;
+  background: var(--border);
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+.feed-body { font-size: 12px; line-height: 1.45; }
+.feed-agent { font-weight: 600; color: var(--ink); }
+.feed-time { font-size: 10px; color: var(--ink-faint); margin-top: 2px; }
+
+.alert-banner {
+  background: #fff8f0;
+  border: 1px solid #f0d8b8;
+  border-radius: 8px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.alert-text { font-size: 13px; font-weight: 600; }
+.alert-sub { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+
+/* ── SCREEN 2: AGENT FLOOR ── */
+.pipeline-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 24px;
+}
+.layer-row { margin-bottom: 6px; }
+.layer-title {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 10px;
+}
+.agent-chips { display: flex; gap: 8px; flex-wrap: wrap; }
+.agent-chip {
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 14px;
+  background: var(--bg-warm);
+  cursor: pointer;
+  transition: all .12s;
+  min-width: 110px;
+}
+.agent-chip:hover { border-color: var(--ink); background: var(--bg); }
+.agent-chip.active { border-color: var(--ink); background: var(--surface); box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+.chip-name { font-size: 12px; font-weight: 600; }
+.chip-state {
+  font-size: 10px;
+  color: var(--ink-faint);
+  margin-top: 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.state-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #ccc;
+  display: inline-block;
+}
+.state-dot.on { background: #555; }
+.state-dot.wait { background: #aaa; }
+
+.connector {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 auto;
+}
+.gate-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 4px 0;
+}
+.gate-chip {
+  border: 2px solid var(--ink);
+  border-radius: 6px;
+  padding: 7px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--surface);
+  cursor: pointer;
+  letter-spacing: .3px;
+}
+.gate-chip.warn {
+  border-color: #c44;
+  color: #c44;
+  background: #fff8f8;
+}
+.gate-chip.locked {
+  border-color: var(--border);
+  color: var(--ink-faint);
+  background: var(--bg);
+  font-weight: 400;
+}
+
+.agent-detail-pane {
+  background: var(--bg-warm);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 18px;
+  margin-top: 0;
+}
+.pane-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.pane-name { font-size: 15px; font-weight: 700; }
+.pane-close {
+  font-size: 16px;
+  color: var(--ink-faint);
+  cursor: pointer;
+  background: none;
+  border: none;
+  line-height: 1;
+}
+.detail-stat-row { display: flex; gap: 16px; margin-bottom: 14px; }
+.detail-stat { text-align: center; flex: 1; }
+.detail-stat .ds-val { font-size: 18px; font-weight: 700; }
+.detail-stat .ds-lbl { font-size: 10px; color: var(--ink-faint); margin-top: 2px; }
+
+/* ── SCREEN 3: YOUR TURN ── */
+.review-layout { display: grid; grid-template-columns: 1fr 340px; gap: 16px; }
+.content-preview {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.preview-header {
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.preview-title { font-size: 15px; font-weight: 700; }
+.preview-body { padding: 18px; }
+.text-block { background: var(--bg); border-radius: 4px; height: 10px; margin-bottom: 8px; }
+.text-block.short { width: 60%; }
+.text-block.shorter { width: 40%; }
+.text-block.medium { width: 80%; }
+
+.review-sidebar {}
+.score-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.score-name { font-size: 12px; width: 110px; flex-shrink: 0; color: var(--ink-muted); }
+.score-track { flex: 1; height: 6px; background: #e8e8e8; border-radius: 3px; }
+.score-fill { height: 100%; background: var(--ink); border-radius: 3px; }
+.score-num { font-size: 12px; font-weight: 700; width: 26px; text-align: right; flex-shrink: 0; }
+
+.textarea-field {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 12px;
+  resize: none;
+  background: var(--surface);
+  color: var(--ink);
+  font-family: inherit;
+  line-height: 1.5;
+}
+.review-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+/* ── VISION SCREEN ── */
+.vision-hero {
+  background: var(--ink);
+  color: #fff;
+  border-radius: 12px;
+  padding: 32px;
+  margin-bottom: 20px;
+}
+.vision-eyebrow {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  opacity: .5;
+  margin-bottom: 10px;
+}
+.vision-headline {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+.vision-sub {
+  font-size: 13px;
+  opacity: .6;
+  line-height: 1.6;
+}
+.command-mockup {
+  background: #fff;
+  border-radius: 10px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+}
+.cmd-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-warm);
+}
+.cmd-cursor {
+  width: 2px; height: 16px;
+  background: var(--ink);
+  animation: blink 1s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+.cmd-text { font-size: 14px; color: var(--ink); flex: 1; }
+.cmd-hint { font-size: 11px; color: var(--ink-faint); }
+.cmd-response {
+  padding: 14px 18px;
+  background: var(--surface);
+}
+.cmd-action-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 12px;
+}
+.cmd-action-row:last-child { border-bottom: none; }
+.cmd-action-icon {
+  width: 22px; height: 22px;
+  background: var(--bg);
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  font-size: 11px;
+}
+.cmd-action-text { flex: 1; }
+.cmd-action-badge { background: #e8ffe8; border-radius: 3px; padding: 1px 6px; font-size: 10px; color: #2a6e2a; }
+
+.concept-card {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 10px;
+  padding: 18px;
+  display: flex;
+  gap: 14px;
+}
+.concept-num {
+  font-size: 28px;
+  font-weight: 800;
+  color: #e0e0e0;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 36px;
+}
+.concept-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.concept-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.55; }
+
+/* ── ANNOTATION SPOTS ── */
+.ann {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 20px;
+  background: var(--question);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 10px;
+  font-weight: 700;
+  cursor: default;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* ── WATERMARK ── */
+.wm {
+  position: fixed;
+  bottom: 12px;
+  right: 16px;
+  font-size: 10px;
+  color: var(--border);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 999;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════
+   MOBILE NAV BAR
+══════════════════════════════════════ */
+#mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 58px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  z-index: 200;
+}
+.mn-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  font-size: 10px;
+  color: var(--ink-faint);
+  padding: 6px 4px;
+  border: none;
+  background: none;
+  text-decoration: none;
+  letter-spacing: .2px;
+  transition: color .12s;
+}
+.mn-item.active { color: var(--ink); font-weight: 600; }
+.mn-dot-m {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background .12s;
+}
+.mn-item.active .mn-dot-m { background: var(--ink); }
+.mn-item.mn-vision { font-style: italic; }
+
+/* ── DISCUSS FAB ── */
+#discuss-fab {
+  display: none;
+  position: fixed;
+  bottom: 70px;
+  right: 16px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 24px;
+  padding: 9px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 201;
+  box-shadow: 0 4px 14px rgba(0,0,0,.22);
+  border: none;
+}
+
+/* ── DISCUSS DRAWER (mobile overlay) ── */
+#discuss-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.38);
+  z-index: 300;
+}
+#discuss-backdrop.open { display: block; }
+#discuss.drawer-open {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  max-height: 72vh;
+  border-radius: 14px 14px 0 0;
+  border-left: none;
+  border-top: 1px solid var(--border);
+  z-index: 301;
+  overflow-y: auto;
+  padding-top: 0;
+}
+.drawer-handle {
+  display: none;
+  width: 36px; height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin: 12px auto 14px;
+}
+#discuss.drawer-open .drawer-handle { display: block; }
+.discuss-close-btn {
+  display: none;
+  float: right;
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 0 0 8px 8px;
+}
+#discuss.drawer-open .discuss-close-btn { display: block; }
+
+/* ══════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+══════════════════════════════════════ */
+
+/* Tablet: sidebar stays, discussion panel shrinks */
+@media (max-width: 1100px) {
+  #discuss { width: 220px; min-width: 220px; }
+}
+
+/* Mobile: full reflow */
+@media (max-width: 768px) {
+  :root {
+    --sidebar: 0px;
+    --topbar: 48px;
+  }
+
+  body { overflow: hidden; }
+
+  /* Hide desktop rail, show mobile nav */
+  #rail { display: none; }
+  #mobile-nav { display: flex; }
+  #discuss-fab { display: block; }
+
+  /* Shell fills full width */
+  #shell { margin-left: 0; }
+
+  /* Topbar: tighten up */
+  #topbar { padding: 0 14px; }
+  .page-subtitle { display: none; }
+  .chip { display: none; }
+  .topbar-right { gap: 6px; }
+
+  /* Viewport: single column, no discussion panel */
+  #viewport { flex-direction: column; }
+  #discuss { display: none; width: 0; min-width: 0; border: none; padding: 0; }
+
+  /* Main content: breathing room + space for bottom nav */
+  #main-content {
+    padding: 14px 14px 80px;
+  }
+
+  /* ── COCKPIT ── */
+  .hero-stat { font-size: 36px; letter-spacing: -1.5px; }
+
+  .stat-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-direction: unset;
+  }
+  .stat-cell {
+    border-right: none;
+    border-bottom: 1px solid var(--border-light);
+  }
+  .stat-cell:nth-child(odd)  { border-right: 1px solid var(--border-light); }
+  .stat-cell:nth-child(3),
+  .stat-cell:nth-child(4)    { border-bottom: none; }
+
+  .row { flex-direction: column; gap: 12px; }
+  .bu-name { width: 120px; font-size: 11px; }
+
+  .alert-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  /* ── AGENT FLOOR ── */
+  #screen-floor > .row { flex-direction: column; }
+  .agent-detail-col {
+    width: 100% !important;
+    flex-shrink: unset !important;
+  }
+  .pipeline-wrap { padding: 16px; }
+
+  /* ── REVIEW SCREEN ── */
+  .review-layout {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* ── VISION ── */
+  .vision-hero { padding: 22px 18px; }
+  .vision-headline { font-size: 22px; }
+  .grid-2 { grid-template-columns: 1fr; }
+
+  /* ── GENERAL ── */
+  .card { padding: 14px; }
+  .section-label { font-size: 10px; }
+  .wm { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ RAIL ═══════════════ -->
+<div id="rail">
+  <div class="rail-brand">
+    <div class="brand-mark"><span>MS</span></div>
+    <div class="brand-name">
+      Marketing Studio
+      <small>AI Content Platform</small>
+    </div>
+  </div>
+
+  <nav>
+    <div class="rail-section">Core Flows</div>
+    <a class="active" onclick="goTo('cockpit',this)">
+      <div class="nav-dot"></div> The Cockpit
+    </a>
+    <a onclick="goTo('floor',this)">
+      <div class="nav-dot"></div> Agent Floor
+    </a>
+    <a onclick="goTo('yourturn',this)">
+      <div class="nav-dot"></div> Your Turn
+    </a>
+
+    <div class="rail-divider"></div>
+    <div class="rail-section">Vision</div>
+    <a class="vision-link" onclick="goTo('vision',this)">
+      <div class="nav-dot"></div> What's Next →
+    </a>
+  </nav>
+
+  <div class="screen-counter">
+    <div class="counter-label">Screen</div>
+    <div class="counter-pips" id="pips">
+      <div class="pip active" id="pip-0"></div>
+      <div class="pip" id="pip-1"></div>
+      <div class="pip" id="pip-2"></div>
+      <div class="pip" id="pip-3"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ SHELL ═══════════════ -->
+<div id="shell">
+  <div id="topbar">
+    <div class="topbar-left">
+      <div class="page-title" id="page-title">The Cockpit</div>
+      <div class="page-subtitle" id="page-sub">What does your day look like?</div>
+    </div>
+    <div class="topbar-right">
+      <span class="chip">Campaign Lead ▾</span>
+      <div class="icon-btn">🔔</div>
+      <div class="icon-btn">◑</div>
+    </div>
+  </div>
+
+  <div id="viewport">
+    <div id="main-content">
+
+      <!-- ══ SCREEN 1: THE COCKPIT ══ -->
+      <div class="screen active" id="screen-cockpit">
+
+        <!-- Alert -->
+        <div class="alert-banner" style="margin-bottom:20px">
+          <div>
+            <div class="alert-text">Gate 2 is overdue — 14 assets waiting for your review</div>
+            <div class="alert-sub">SLA exceeded by 3 hours · Content review</div>
+          </div>
+          <button class="btn btn-filled btn-sm" onclick="goTo('yourturn', document.querySelectorAll('nav a')[2])">Review Now</button>
+        </div>
+
+        <!-- Hero number -->
+        <div class="row" style="margin-bottom:20px; align-items:flex-end">
+          <div>
+            <div class="hero-stat">187</div>
+            <div class="hero-label">assets in production this quarter</div>
+          </div>
+          <div style="flex:1"></div>
+          <div style="text-align:right">
+            <div style="font-size:12px;color:var(--ink-faint);margin-bottom:2px">Target</div>
+            <div style="font-size:22px;font-weight:700">310</div>
+            <div style="font-size:11px;color:var(--ink-faint)">61% complete</div>
+          </div>
+        </div>
+
+        <!-- Stat strip -->
+        <div class="stat-row" style="margin-bottom:20px">
+          <div class="stat-cell">
+            <div class="stat-val">$84k</div>
+            <div class="stat-lbl">Agency cost saved</div>
+            <div class="stat-delta">▲ vs baseline</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-val">91.4</div>
+            <div class="stat-lbl">Avg quality score</div>
+            <div class="stat-delta">↑ 3pts this month</div>
+          </div>
+          <div class="stat-cell">
+            <div class="stat-val">78%</div>
+            <div class="stat-lbl">GEO readiness</div>
+            <div class="stat-delta">LLM citation potential</div>
+          </div>
+          <div class="stat-cell" style="background:#fff8f0">
+            <div class="stat-val" style="color:#c44">2 / 4</div>
+            <div class="stat-lbl">Gates open</div>
+            <div class="stat-delta" style="color:#c44">1 gate overdue</div>
+          </div>
+        </div>
+
+        <!-- 2 col -->
+        <div class="row">
+          <div class="col" style="flex:1.5">
+            <div class="card">
+              <div class="section-label">Business Unit Progress <span class="ann">1</span></div>
+              <div class="bu-row"><div class="bu-name">Salesforce</div><div class="track"><div class="fill" style="width:74%"></div></div><div class="bu-count">46 / 62</div></div>
+              <div class="bu-row"><div class="bu-name">Dynamics 365</div><div class="track"><div class="fill" style="width:58%"></div></div><div class="bu-count">36 / 62</div></div>
+              <div class="bu-row"><div class="bu-name">Enterprise Integration</div><div class="track"><div class="fill" style="width:42%"></div></div><div class="bu-count">26 / 62</div></div>
+              <div class="bu-row"><div class="bu-name">Digital Transformation</div><div class="track"><div class="fill" style="width:53%"></div></div><div class="bu-count">33 / 62</div></div>
+              <div class="bu-row"><div class="bu-name">KPO Services</div><div class="track"><div class="fill" style="width:30%"></div></div><div class="bu-count">19 / 62</div></div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="section-label">Live Agent Activity <span class="ann">2</span></div>
+              <div class="feed-item"><div class="feed-pip"></div><div><div class="feed-body"><span class="feed-agent">SEO Blog Agent</span> completed draft — Salesforce Integration Guide</div><div class="feed-time">2 min ago</div></div></div>
+              <div class="feed-item"><div class="feed-pip"></div><div><div class="feed-body"><span class="feed-agent">LinkedIn Agent</span> queued 3 posts for review</div><div class="feed-time">7 min ago</div></div></div>
+              <div class="feed-item"><div class="feed-pip"></div><div><div class="feed-body"><span class="feed-agent">Quality Gate</span> blocked 1 asset — brand score below threshold</div><div class="feed-time">14 min ago</div></div></div>
+              <div class="feed-item"><div class="feed-pip"></div><div><div class="feed-body"><span class="feed-agent">Email Agent</span> started Q3 nurture sequence — Dynamics BU</div><div class="feed-time">22 min ago</div></div></div>
+              <div class="feed-item"><div class="feed-pip"></div><div><div class="feed-body"><span class="feed-agent">Analytics Agent</span> published quarterly learnings</div><div class="feed-time">1h ago</div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SCREEN 2: AGENT FLOOR ══ -->
+      <div class="screen" id="screen-floor">
+        <div class="row" style="gap:16px;align-items:flex-start">
+          <div style="flex:1">
+            <div class="pipeline-wrap">
+
+              <!-- Layer 1 -->
+              <div class="layer-row">
+                <div class="layer-title">Layer 1 — Intelligence</div>
+                <div class="agent-chips">
+                  <div class="agent-chip" onclick="selectAgent(this,'Market Intelligence','Running','Monitors competitor activity, search trends, and industry signals. Produces the weekly market brief that kicks off each content cycle.','87 briefs','Gemini 1.5 Pro')">
+                    <div class="chip-name">Market Intelligence</div>
+                    <div class="chip-state"><span class="state-dot on"></span> Running</div>
+                  </div>
+                  <div class="agent-chip" onclick="selectAgent(this,'Content Planning','Running','Maps the market brief into a quarterly content calendar — assigns formats, BUs, and production order.','62 assets planned','GPT-4o')">
+                    <div class="chip-name">Content Planning</div>
+                    <div class="chip-state"><span class="state-dot on"></span> Running</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="connector"></div>
+              <div class="gate-row">
+                <div class="gate-chip" onclick="goTo('yourturn',document.querySelectorAll('nav a')[2])">◆ Gate 1 — Campaign Validation</div>
+              </div>
+              <div class="connector"></div>
+
+              <!-- Layer 2 -->
+              <div class="layer-row" style="margin-top:8px">
+                <div class="layer-title">Layer 2 — Production (8 agents)</div>
+                <div class="agent-chips">
+                  <div class="agent-chip" onclick="selectAgent(this,'SEO Blog','Running','Long-form articles (1500–3000 words). Handles keyword targeting, internal linking, and metadata.','46 blogs done','Claude Sonnet')">
+                    <div class="chip-name">SEO Blog</div>
+                    <div class="chip-state"><span class="state-dot on"></span> Running</div>
+                  </div>
+                  <div class="agent-chip" onclick="selectAgent(this,'LinkedIn','Queued','Thought leadership posts and carousel content for LinkedIn. Adapts tone per business unit.','28 posts queued','Claude Sonnet')">
+                    <div class="chip-name">LinkedIn</div>
+                    <div class="chip-state"><span class="state-dot wait"></span> Queued</div>
+                  </div>
+                  <div class="agent-chip" onclick="selectAgent(this,'Email','Running','Multi-touch nurture sequences. Generates subject lines, body copy, and A/B test variants.','18 sequences','Claude Sonnet')">
+                    <div class="chip-name">Email</div>
+                    <div class="chip-state"><span class="state-dot on"></span> Running</div>
+                  </div>
+                  <div class="agent-chip" onclick="selectAgent(this,'Case Study','Running','Transforms CRM win data into customer narratives. Produces long-form and social-snippet versions.','9 done','Claude Opus')">
+                    <div class="chip-name">Case Study</div>
+                    <div class="chip-state"><span class="state-dot on"></span> Running</div>
+                  </div>
+                  <div class="agent-chip" onclick="selectAgent(this,'Podcast Script','Running','20–30 min episode scripts with show notes, timestamps, and SEO descriptions.','6 episodes','Claude Opus')">
+                    <div class="chip-name">Podcast Script</div>
+                    <div class="chip-state"><span class="state-dot on"></span> Running</div>
+                  </div>
+                  <div class="agent-chip" onclick="selectAgent(this,'Webinar','Idle','Slide decks, speaker notes, and registration page copy for webinar events.','4 done','GPT-4o')">
+                    <div class="chip-name">Webinar</div>
+                    <div class="chip-state"><span class="state-dot wait"></span> Idle</div>
+                  </div>
+                  <div class="agent-chip" onclick="selectAgent(this,'Reddit','Idle','Authentic community-style posts optimised for Reddit engagement and organic reach.','12 done','GPT-4o Mini')">
+                    <div class="chip-name">Reddit</div>
+                    <div class="chip-state"><span class="state-dot wait"></span> Idle</div>
+                  </div>
+                  <div class="agent-chip" onclick="selectAgent(this,'Video Script','Queued','60–90 sec short-form scripts with B-roll notes and thumbnail brief.','11 done','GPT-4o')">
+                    <div class="chip-name">Video Script</div>
+                    <div class="chip-state"><span class="state-dot wait"></span> Queued</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="connector"></div>
+              <div class="gate-row">
+                <div class="gate-chip warn">◆ Gate 2 — Content Review ⚠ OVERDUE</div>
+              </div>
+              <div class="connector"></div>
+
+              <!-- Layer 3 -->
+              <div class="layer-row" style="margin-top:8px">
+                <div class="layer-title">Layer 3 — Distribution</div>
+                <div class="agent-chips">
+                  <div class="agent-chip" style="flex:1;opacity:.6" onclick="selectAgent(this,'Distribution','Waiting','Schedules and publishes approved content across all channels. Currently waiting for Gate 2 clearance.','87 published','Internal')">
+                    <div class="chip-name">Distribution Agent</div>
+                    <div class="chip-state"><span class="state-dot"></span> Waiting for Gate 2</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="connector"></div>
+              <div class="gate-row" style="gap:10px">
+                <div class="gate-chip locked">◆ Gate 3 — locked</div>
+                <div class="gate-chip locked">◆ Gate 4 — locked</div>
+              </div>
+              <div class="connector"></div>
+
+              <!-- Layer 4 -->
+              <div class="layer-row" style="margin-top:8px">
+                <div class="layer-title">Layer 4 — Analytics</div>
+                <div class="agent-chips">
+                  <div class="agent-chip" style="flex:1" onclick="selectAgent(this,'Analytics & Optimization','Running','Tracks content performance, extracts patterns, feeds learnings back to Layer 1. Closes the loop.','2 reports done','Claude Sonnet')">
+                    <div class="chip-name">Analytics & Optimization</div>
+                    <div class="chip-state"><span class="state-dot on"></span> Feeds learnings back to Layer 1</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detail pane -->
+          <div class="agent-detail-col" style="width:240px;flex-shrink:0">
+            <div class="agent-detail-pane" id="agent-detail" style="display:none">
+              <div class="pane-header">
+                <div>
+                  <div class="pane-name" id="pane-name">—</div>
+                  <div style="font-size:11px;color:var(--ink-faint);margin-top:2px" id="pane-model">—</div>
+                </div>
+                <button class="pane-close" onclick="closeAgentDetail()">✕</button>
+              </div>
+              <div class="detail-stat-row">
+                <div class="detail-stat">
+                  <div class="ds-val" id="pane-stat">—</div>
+                  <div class="ds-lbl">output</div>
+                </div>
+                <div class="detail-stat">
+                  <div class="ds-val" id="pane-state">—</div>
+                  <div class="ds-lbl">status</div>
+                </div>
+              </div>
+              <div style="font-size:12px;color:var(--ink-muted);line-height:1.55;margin-bottom:14px" id="pane-desc">—</div>
+              <div class="placeholder" style="height:70px">[Token / Runtime Telemetry]</div>
+            </div>
+            <div id="pane-hint" style="font-size:12px;color:var(--ink-faint);text-align:center;padding:20px;line-height:1.6">
+              Click any agent to inspect its status and responsibilities
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SCREEN 3: YOUR TURN ══ -->
+      <div class="screen" id="screen-yourturn">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:18px">
+          <span class="badge badge-dark">Gate 2</span>
+          <span style="font-size:13px;color:var(--ink-muted)">Content Review</span>
+          <div style="flex:1"></div>
+          <span style="font-size:12px;color:#c44;font-weight:600">⚠ SLA exceeded by 3h</span>
+          <span class="badge" style="background:#fff0f0;color:#c44">14 waiting</span>
+        </div>
+
+        <div class="review-layout">
+          <!-- Content preview -->
+          <div class="content-preview">
+            <div class="preview-header">
+              <div>
+                <div class="preview-title">Salesforce Integration: Best Practices Guide</div>
+                <div style="display:flex;gap:6px;margin-top:6px">
+                  <span class="badge">Salesforce</span>
+                  <span class="badge">SEO Blog</span>
+                  <span class="badge badge-outline">2,400 words</span>
+                </div>
+              </div>
+              <div style="text-align:right">
+                <div style="font-size:22px;font-weight:700">92</div>
+                <div style="font-size:10px;color:var(--ink-faint)">Overall score</div>
+              </div>
+            </div>
+            <div class="preview-body">
+              <div style="font-size:13px;font-weight:600;margin-bottom:12px;line-height:1.4">Introduction to Salesforce Integration Best Practices for Enterprise Teams</div>
+              <div class="text-block" style="width:100%"></div>
+              <div class="text-block medium"></div>
+              <div class="text-block" style="width:90%"></div>
+              <div class="text-block short"></div>
+              <div style="height:16px"></div>
+              <div class="text-block" style="width:100%"></div>
+              <div class="text-block" style="width:95%"></div>
+              <div class="text-block medium"></div>
+              <div class="text-block shorter"></div>
+              <div style="height:16px"></div>
+              <div class="placeholder" style="height:80px;margin-bottom:14px">[H2 Section — Key Integration Patterns]</div>
+              <div class="text-block" style="width:100%"></div>
+              <div class="text-block medium"></div>
+              <div class="text-block" style="width:85%"></div>
+              <div class="text-block shorter"></div>
+            </div>
+          </div>
+
+          <!-- Review sidebar -->
+          <div class="review-sidebar">
+            <div class="card" style="margin-bottom:12px">
+              <div class="section-label">Quality Breakdown <span class="ann">1</span></div>
+              <div class="score-item"><div class="score-name">SEO Score</div><div class="score-track"><div class="score-fill" style="width:94%"></div></div><div class="score-num">94</div></div>
+              <div class="score-item"><div class="score-name">Brand Alignment</div><div class="score-track"><div class="score-fill" style="width:89%"></div></div><div class="score-num">89</div></div>
+              <div class="score-item"><div class="score-name">GEO Readiness</div><div class="score-track"><div class="score-fill" style="width:83%"></div></div><div class="score-num">83</div></div>
+              <div class="score-item"><div class="score-name">AI Detection Risk</div><div class="score-track"><div class="score-fill" style="width:18%"></div></div><div class="score-num">18%</div></div>
+            </div>
+
+            <div class="card" style="margin-bottom:12px">
+              <div class="section-label">Revision Notes <span class="ann">2</span></div>
+              <textarea class="textarea-field" rows="4" placeholder="Describe what needs to change — notes are sent back to the originating agent…"></textarea>
+            </div>
+
+            <div class="card">
+              <div class="section-label">Queue <span class="ann">3</span></div>
+              <div style="font-size:12px;color:var(--ink-muted);margin-bottom:10px">14 assets · you are on 1 of 14</div>
+              <div class="review-actions" style="justify-content:stretch;flex-direction:column;gap:6px">
+                <button class="btn btn-filled" style="width:100%">Approve &amp; Next →</button>
+                <button class="btn" style="width:100%">Request Revision</button>
+                <button class="btn" style="width:100%;border-color:var(--border);color:var(--ink-faint)">Skip for now</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ VISION SCREEN ══ -->
+      <div class="screen" id="screen-vision">
+        <div class="vision-hero">
+          <div class="vision-eyebrow">Concept — Not built yet</div>
+          <div class="vision-headline">What if you just told it<br>what to do?</div>
+          <div class="vision-sub">Instead of navigating screens — type a command. The platform understands intent and routes it across every agent simultaneously.</div>
+        </div>
+
+        <div class="row" style="margin-bottom:16px">
+          <div class="col">
+            <div class="command-mockup">
+              <div class="cmd-bar">
+                <div class="cmd-text">Pause all KPO content — brand pivot on Tuesday. Resume Thursday.</div>
+                <div class="cmd-cursor"></div>
+              </div>
+              <div class="cmd-response">
+                <div class="cmd-action-row">
+                  <div class="cmd-action-icon">⏸</div>
+                  <div class="cmd-action-text">KPO Services content queue paused (19 assets)</div>
+                  <div class="cmd-action-badge">Done</div>
+                </div>
+                <div class="cmd-action-row">
+                  <div class="cmd-action-icon">📅</div>
+                  <div class="cmd-action-text">Resume scheduled for Thursday 09:00</div>
+                  <div class="cmd-action-badge">Done</div>
+                </div>
+                <div class="cmd-action-row">
+                  <div class="cmd-action-icon">📢</div>
+                  <div class="cmd-action-text">Content Editor team notified via Slack</div>
+                  <div class="cmd-action-badge">Done</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="command-mockup">
+              <div class="cmd-bar">
+                <div class="cmd-text">Which assets are most likely to fail Gate 2 this week?</div>
+                <div class="cmd-cursor"></div>
+              </div>
+              <div class="cmd-response">
+                <div class="cmd-action-row">
+                  <div class="cmd-action-icon">⚠</div>
+                  <div class="cmd-action-text"><strong>Podcast Ep. 7</strong> — brand score projecting 76</div>
+                  <div class="cmd-action-badge" style="background:#fff0f0;color:#c44">At Risk</div>
+                </div>
+                <div class="cmd-action-row">
+                  <div class="cmd-action-icon">⚠</div>
+                  <div class="cmd-action-text"><strong>DX Webinar Deck</strong> — GEO score below threshold</div>
+                  <div class="cmd-action-badge" style="background:#fff0f0;color:#c44">At Risk</div>
+                </div>
+                <div class="cmd-action-row">
+                  <div class="cmd-action-icon">✓</div>
+                  <div class="cmd-action-text">11 other assets tracking above 88</div>
+                  <div class="cmd-action-badge">On Track</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-label" style="margin-bottom:12px">Other ideas on the horizon</div>
+        <div class="grid-2">
+          <div class="concept-card">
+            <div class="concept-num">A</div>
+            <div>
+              <div class="concept-title">GEO Studio</div>
+              <div class="concept-desc">Test your content against multiple LLMs. See which queries trigger a citation, which sentences are most "citation-friendly," and get targeted rewrites to increase LLM visibility.</div>
+            </div>
+          </div>
+          <div class="concept-card">
+            <div class="concept-num">B</div>
+            <div>
+              <div class="concept-title">Brief Suggestion Queue</div>
+              <div class="concept-desc">Agents surface content brief ideas every Monday — based on trending queries, competitor gaps, and your own performance patterns. You approve or reject. You stop being the strategist; you become the editor.</div>
+            </div>
+          </div>
+          <div class="concept-card">
+            <div class="concept-num">C</div>
+            <div>
+              <div class="concept-title">Content Genome</div>
+              <div class="concept-desc">Every published asset is fingerprinted — argument structure, tone, evidence style. When a Salesforce post performs well, the system auto-suggests remix briefs for Dynamics, KPO, and EI.</div>
+            </div>
+          </div>
+          <div class="concept-card">
+            <div class="concept-num">D</div>
+            <div>
+              <div class="concept-title">Revision Intelligence</div>
+              <div class="concept-desc">An orchestrator layer learns which revision patterns lead to Gate approval. After a few cycles, it pre-applies common corrections before content ever reaches a human reviewer.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tbd-block" style="margin-top:16px">
+          💬  Which of these resonates most? What's missing from this list?
+        </div>
+      </div>
+
+    </div><!-- /#main-content -->
+
+    <!-- ═══════════════ DISCUSSION PANEL ═══════════════ -->
+    <div id="discuss">
+      <div class="drawer-handle"></div>
+      <button class="discuss-close-btn" onclick="closeDiscuss()">✕</button>
+      <div class="discuss-title">Discussion Points</div>
+
+      <!-- Screen 1 questions -->
+      <div class="dq-set" id="dq-cockpit">
+        <div class="q-card">
+          <div class="q-num"><span class="ann">1</span> &nbsp;BU Progress</div>
+          <div class="q-text">Is 62 assets per BU per quarter the right unit of measure — or should we track by impact, not volume?</div>
+          <div class="q-note">Consider: a CMO may care more about pipeline influenced than asset count.</div>
+        </div>
+        <div class="q-card">
+          <div class="q-num"><span class="ann">2</span> &nbsp;Activity Feed</div>
+          <div class="q-text">Who actually reads a live agent feed? Does this belong on the home screen — or is it noise for most roles?</div>
+          <div class="q-note">Alternative: only surface feed items that require action.</div>
+        </div>
+        <div class="divider-discuss"></div>
+        <div class="tbd-block">
+          What's the FIRST thing the CMO needs to see when they log in?
+        </div>
+      </div>
+
+      <!-- Screen 2 questions -->
+      <div class="dq-set" id="dq-floor" style="display:none">
+        <div class="q-card">
+          <div class="q-num"><span class="ann">1</span> &nbsp;Audience</div>
+          <div class="q-text">Should the Marketing Head ever see this screen? Or is the Agent Floor only for Campaign Leads and AI COE?</div>
+          <div class="q-note">Risk: showing agents to non-technical users may erode trust if something looks broken.</div>
+        </div>
+        <div class="q-card">
+          <div class="q-num"><span class="ann">2</span> &nbsp;Gate Count</div>
+          <div class="q-text">4 sequential gates — is that too many? Each gate is a potential bottleneck. What's the minimum number of human checkpoints we actually need?</div>
+          <div class="q-note">Hypothesis: 2 gates (strategic validation + final review) may be enough.</div>
+        </div>
+        <div class="divider-discuss"></div>
+        <div class="tbd-block">
+          What would make a user trust this system enough to reduce gates over time?
+        </div>
+      </div>
+
+      <!-- Screen 3 questions -->
+      <div class="dq-set" id="dq-yourturn" style="display:none">
+        <div class="q-card">
+          <div class="q-num"><span class="ann">1</span> &nbsp;Quality Scores</div>
+          <div class="q-text">Do reviewers actually use these scores to make decisions — or do they read the content and form their own opinion regardless?</div>
+          <div class="q-note">If scores don't change reviewer behaviour, they're decoration.</div>
+        </div>
+        <div class="q-card">
+          <div class="q-num"><span class="ann">2</span> &nbsp;Revision Notes</div>
+          <div class="q-text">Freeform text sent back to an AI agent — is that reliable enough? Should we have structured revision categories instead?</div>
+          <div class="q-note">e.g. "Tone", "Accuracy", "Brand", "CTA" as selectable flags + a notes field.</div>
+        </div>
+        <div class="q-card">
+          <div class="q-num"><span class="ann">3</span> &nbsp;The Queue</div>
+          <div class="q-text">14 assets in one sitting is a lot to ask. Should the system triage the queue — showing the highest-risk or highest-value assets first?</div>
+        </div>
+        <div class="divider-discuss"></div>
+        <div class="tbd-block">
+          What would make reviewers want to use this every day?
+        </div>
+      </div>
+
+      <!-- Vision questions -->
+      <div class="dq-set" id="dq-vision" style="display:none">
+        <div class="q-card">
+          <div class="q-num"><span class="ann">→</span> &nbsp;Command Layer</div>
+          <div class="q-text">Does natural language control feel like magic or like extra work? What's the right balance between guided UI and open-ended commands?</div>
+        </div>
+        <div class="q-card">
+          <div class="q-num"><span class="ann">→</span> &nbsp;Horizon Features</div>
+          <div class="q-text">Of the 4 concepts shown — A, B, C, D — which one would change your team's workflow the most in the next 6 months?</div>
+          <div class="q-note">GEO Studio / Brief Queue / Content Genome / Revision Intelligence</div>
+        </div>
+        <div class="divider-discuss"></div>
+        <div class="tbd-block">
+          What's a capability you wish existed that isn't on this list?
+        </div>
+      </div>
+    </div>
+  </div><!-- /#viewport -->
+</div>
+
+<!-- ═══════════════ MOBILE NAV ═══════════════ -->
+<div id="mobile-nav">
+  <a class="mn-item active" data-screen="cockpit" onclick="goTo('cockpit',this)">
+    <div class="mn-dot-m"></div>Cockpit
+  </a>
+  <a class="mn-item" data-screen="floor" onclick="goTo('floor',this)">
+    <div class="mn-dot-m"></div>Agent Floor
+  </a>
+  <a class="mn-item" data-screen="yourturn" onclick="goTo('yourturn',this)">
+    <div class="mn-dot-m"></div>Your Turn
+  </a>
+  <a class="mn-item mn-vision" data-screen="vision" onclick="goTo('vision',this)">
+    <div class="mn-dot-m"></div>What's Next
+  </a>
+</div>
+
+<!-- ═══════════════ DISCUSS FAB + BACKDROP ═══════════════ -->
+<button id="discuss-fab" onclick="openDiscuss()">💬 Discussion</button>
+<div id="discuss-backdrop" onclick="closeDiscuss()"></div>
+
+<div class="wm">Discovery Wireframe · v1 · Not for distribution</div>
+
+<script>
+  const config = {
+    cockpit:  { title: 'The Cockpit',   sub: 'What does your day look like?',    pip: 0, dq: 'dq-cockpit' },
+    floor:    { title: 'Agent Floor',   sub: 'Where the work happens',           pip: 1, dq: 'dq-floor' },
+    yourturn: { title: 'Your Turn',     sub: 'The human moment — Gate 2 review', pip: 2, dq: 'dq-yourturn' },
+    vision:   { title: "What's Next →", sub: 'Concepts for discussion',          pip: 3, dq: 'dq-vision' },
+  };
+
+  const screens = Object.keys(config);
+  let current = 'cockpit';
+
+  function goTo(id, el) {
+    if (!config[id]) return;
+    current = id;
+
+    // swap screen
+    screens.forEach(s => document.getElementById('screen-' + s)?.classList.remove('active'));
+    document.getElementById('screen-' + id)?.classList.add('active');
+
+    // topbar
+    document.getElementById('page-title').textContent = config[id].title;
+    document.getElementById('page-sub').textContent   = config[id].sub;
+
+    // desktop nav
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    if (el && el.closest('nav')) {
+      el.classList.add('active');
+    } else {
+      const idx = screens.indexOf(id);
+      document.querySelectorAll('nav a')[idx]?.classList.add('active');
+    }
+
+    // mobile nav
+    document.querySelectorAll('.mn-item').forEach(a => {
+      a.classList.toggle('active', a.dataset.screen === id);
+    });
+
+    // pips
+    document.querySelectorAll('.pip').forEach((p, i) => {
+      p.classList.toggle('active', i === config[id].pip);
+    });
+
+    // discussion panels
+    document.querySelectorAll('.dq-set').forEach(d => d.style.display = 'none');
+    const dq = document.getElementById(config[id].dq);
+    if (dq) dq.style.display = 'block';
+
+    // close side effects
+    closeAgentDetail();
+    closeDiscuss();
+
+    // scroll main content to top
+    document.getElementById('main-content').scrollTop = 0;
+  }
+
+  function selectAgent(el, name, state, desc, stat, model) {
+    document.querySelectorAll('.agent-chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    document.getElementById('pane-name').textContent  = name;
+    document.getElementById('pane-state').textContent = state;
+    document.getElementById('pane-desc').textContent  = desc;
+    document.getElementById('pane-stat').textContent  = stat;
+    document.getElementById('pane-model').textContent = model;
+    document.getElementById('agent-detail').style.display = 'block';
+    document.getElementById('pane-hint').style.display    = 'none';
+  }
+
+  function closeAgentDetail() {
+    document.getElementById('agent-detail').style.display = 'none';
+    document.getElementById('pane-hint').style.display    = 'block';
+    document.querySelectorAll('.agent-chip').forEach(c => c.classList.remove('active'));
+  }
+
+  // ── DISCUSS DRAWER (mobile) ──
+  function openDiscuss() {
+    const panel   = document.getElementById('discuss');
+    const backdrop = document.getElementById('discuss-backdrop');
+    panel.style.display = 'block';
+    panel.classList.add('drawer-open');
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDiscuss() {
+    const panel    = document.getElementById('discuss');
+    const backdrop = document.getElementById('discuss-backdrop');
+    panel.classList.remove('drawer-open');
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+    // re-hide on mobile after transition
+    if (window.innerWidth <= 768) {
+      setTimeout(() => { panel.style.display = 'none'; }, 10);
+    }
+  }
+</script>
+</body>
+</html>
